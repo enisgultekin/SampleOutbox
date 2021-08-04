@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <GenerateDocumentationFile>True</GenerateDocumentationFile>
+        <DocumentationFile>D:\Projects\RiderProjects\sample-outbox\src\SampleOutbox.API\bin\Debug\net5.0\SampleOutbox.API.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="6.1.0" />
+        <PackageReference Include="MediatR" Version="9.0.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SampleOutbox.Application\SampleOutbox.Application.csproj" />
+      <ProjectReference Include="..\SampleOutbox.Domain\SampleOutbox.Domain.csproj" />
+      <ProjectReference Include="..\SampleOutbox.Infrastructure\SampleOutbox.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>
