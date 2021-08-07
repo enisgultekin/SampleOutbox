@@ -1,4 +1,6 @@
-﻿using SampleOutbox.Application.Configuration.Data;
+﻿using System.Data;
+using Dapper;
+using SampleOutbox.Application.Configuration.Data;
 using SampleOutbox.Domain.Customers;
 
 namespace SampleOutbox.Application.Customers.DomainServices
@@ -14,8 +16,15 @@ namespace SampleOutbox.Application.Customers.DomainServices
 
         public bool IsUnique(string customerEmail)
         {
-            //TODO : Bu kısma geri bak 
-            return true;
+            var connection = _sqlConnectionFactory.GetOpenConnection();
+            const string sql = "SELECT TOP 1 1" + "FROM [orders].[Customers] AS [CUSTOMER] " +
+                               "WHERE [Customer].[Email] = @Email";
+            var customersNumber = connection.QuerySingleOrDefault<int?>(sql, new
+            {
+                Email = customerEmail
+            });
+            
+            return !customersNumber.HasValue;
         }
     }
 }
