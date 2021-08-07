@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
-using SampleOutbox.Application;
 using SampleOutbox.Application.Configuration;
 
 namespace SampleOutbox.API.Configuration

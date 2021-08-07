@@ -42,8 +42,6 @@ namespace SampleOutbox.Infrastructure.Processing
                 var c = ctx.Resolve<IComponentContext>();
                 return t => c.Resolve(t);
             });
-            
-            
         }
 
         private class ScopedContravariantRegistrationSource : IRegistrationSource

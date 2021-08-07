@@ -1,11 +1,8 @@
-﻿using System;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Autofac;
 using Microsoft.Extensions.Logging;
-using SampleOutbox.Application.Configuration;
 using SampleOutbox.Application.Configuration.Emails;
-using SampleOutbox.Infrastructure.Caching;
+using SampleOutbox.Infrastructure.Database;
+using SampleOutbox.Infrastructure.Domain;
 using SampleOutbox.Infrastructure.Processing;
 
 namespace SampleOutbox.Infrastructure
@@ -20,8 +17,9 @@ namespace SampleOutbox.Infrastructure
             {
             }
 
-
+            builder.RegisterModule(new DataAccessModule(connectionString));
             builder.RegisterModule(new MediatorModule());
+            builder.RegisterModule(new DomainModule());
 
             // CompositionRoot.SetContainer(buildContainer);
         }

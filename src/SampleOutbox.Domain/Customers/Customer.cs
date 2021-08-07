@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
 using SampleOutbox.Domain.SeedWork;
 
 namespace SampleOutbox.Domain.Customers
@@ -29,6 +27,16 @@ namespace SampleOutbox.Domain.Customers
             _name = name;
             _welcomeEmailWasSent = false;
             // _orders = new List<Order>();
+        }
+        
+        public static Customer CreateRegistered(
+            string email, 
+            string name,
+            ICustomerUniquenessChecker customerUniquenessChecker)
+        {
+            // CheckRule(new CustomerEmailMustBeUniqueRule(customerUniquenessChecker, email));
+
+            return new Customer(email, name);
         }
     }
 }
