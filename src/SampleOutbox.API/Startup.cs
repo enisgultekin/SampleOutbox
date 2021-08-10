@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Autofac;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -61,7 +62,6 @@ namespace SampleOutbox.API
         public void ConfigureContainer(Autofac.ContainerBuilder builder)
         {
             var emailSettings = _configuration.GetSection("EmailSettings").Get<EmailSettings>();
-           
 
             ApplicationStartup.Initialize(builder, 
                 _configuration[OrdersConnectionString],

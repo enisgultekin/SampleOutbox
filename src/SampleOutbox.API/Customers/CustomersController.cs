@@ -1,9 +1,11 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SampleOutbox.Application.Configuration;
 using SampleOutbox.Application.Customers;
+using SampleOutbox.Application.Customers.GetCustomerDetails;
 using SampleOutbox.Application.Customers.RegisterCustomer;
 
 namespace SampleOutbox.API.Customers
@@ -13,12 +15,19 @@ namespace SampleOutbox.API.Customers
     public class CustomersController : Controller
     {
         private readonly IMediator _mediator;
-        private readonly IExecutionContextAccessor _executionContextAccessor;
 
-        public CustomersController(IMediator mediator, IExecutionContextAccessor executionContextAccessor)
+        public CustomersController(IMediator mediator)
         {
             _mediator = mediator;
-            _executionContextAccessor = executionContextAccessor;
+        }
+
+        [Route("{customerId}")]
+        [HttpGet]
+        [ProducesResponseType(typeof(CustomerDetailsDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetCustomerDetails(Guid customerId)
+        {
+            var customer = await _mediator.Send(new GetCustomerDetailsQuery(customerId));
+            return Ok(customer);
         }
 
         /// <summary>
@@ -29,8 +38,8 @@ namespace SampleOutbox.API.Customers
         [ProducesResponseType(typeof(CustomerDto), (int)HttpStatusCode.Created)]
         public async Task<IActionResult> RegisterCustomer([FromBody] RegisterCustomerRequest request)
         {
-            await _mediator.Send(new RegisterCustomerCommand(request.Email,request.Name));
-            return Ok();
+            var customer = await _mediator.Send(new RegisterCustomerCommand(request.Email,request.Name));
+            return Created(string.Empty,customer);
         }
     }
 }

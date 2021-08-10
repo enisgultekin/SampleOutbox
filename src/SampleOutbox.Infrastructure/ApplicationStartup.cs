@@ -16,7 +16,7 @@ namespace SampleOutbox.Infrastructure
             if (runQuartz)
             {
             }
-
+            
             builder.RegisterModule(new DataAccessModule(connectionString));
             builder.RegisterModule(new MediatorModule());
             builder.RegisterModule(new DomainModule());
